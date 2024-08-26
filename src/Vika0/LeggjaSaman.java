@@ -1,3 +1,5 @@
+package Vika0;
+
 import java.util.Scanner;
 
 
