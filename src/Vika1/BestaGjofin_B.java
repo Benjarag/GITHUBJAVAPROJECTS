@@ -3,7 +3,7 @@ package Vika1;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class BestaGjofin {
+public class BestaGjofin_B {
     public static void main(String[] args) {
         int n = StdIn.readInt();
         // To consume the newline after the integer input (crucial!)

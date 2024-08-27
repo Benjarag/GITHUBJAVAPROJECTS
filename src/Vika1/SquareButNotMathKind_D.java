@@ -1,17 +1,17 @@
 package Vika1;
-import java.util.Scanner;
 
-public class SquareButNotMathKind {
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+
+public class SquareButNotMathKind_D {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        scanner.close();
+        int n = StdIn.readInt();
         
         if (n == 1) {
-            System.out.println("*");
+            StdOut.println("*");
         } else if (n == 2) {
-            System.out.println("* *");
-            System.out.println("* *");
+            StdOut.println("* *");
+            StdOut.println("* *");
         } else {
             // printing top row
             printRow(n, true);
@@ -30,21 +30,20 @@ public class SquareButNotMathKind {
         if (isEdge) {
             // printing a row of asterisks separated by spaces
             for (int i = 0; i < n; i++) {
-                System.out.print("*");
+                StdOut.print("*");
                 if (i < n - 1) {
-                    System.out.print(" ");
+                    StdOut.print(" ");
                 }
             }
         } else {
             // printing a row with asterisks only on the edges
-            System.out.print("*");
+            StdOut.print("*");
             for (int i = 0; i < n - 2; i++) {
-                System.out.print(" ");
-                System.out.print(" ");
+                StdOut.print("  ");
             }
-            System.out.print(" *");
+            StdOut.print(" *");
         }
-        System.out.println(); // moving to the next line after printing the row
+        StdOut.println(); // moving to the next line after printing the row
     }
 }
 

@@ -3,7 +3,7 @@ package Vika1;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class ofugsnuid {
+public class ofugsnuid_A {
     public static void main(String[] args) {
         int n = StdIn.readInt();
         int[] A = new int[n];

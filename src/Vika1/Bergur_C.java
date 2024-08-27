@@ -3,7 +3,7 @@ package Vika1;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Bergur {
+public class Bergur_C {
     public static void main(String[] args) {
         int n = StdIn.readInt();
         int[] arr = new int[n];
