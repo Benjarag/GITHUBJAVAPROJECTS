@@ -4,31 +4,31 @@ import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class TestingMatrix {
+public class BracketMatching {
     public static void main(String[] args) {
-        // the length of the bracket sequence
+        // the length of the bracket_string
         int n = StdIn.readInt();
 
-        // create a stack to handle all types of brackets
+        // create a stack to store the brackets
         Stack<Character> stack = new Stack<>();
 
         // reading in the string brackets
         String bracket_string = StdIn.readString();
         
-        // if n is odd, the sequence cannot be valid
+        // if n is odd, we do not have matching brackets, thus invalid
         if (n % 2 != 0) {
             StdOut.println("Invalid");
             return;
         }
 
         for (int i = 0; i < n; i++) {
-            char bracket = bracket_string.charAt(i);
+            char bracket = bracket_string.charAt(i); // gets the individual bracket from the string
 
             // push opening brackets onto the stack
             if (bracket == '(' || bracket == '[' || bracket == '{') {
                 stack.push(bracket);
             } 
-            // for closing brackets, check the stack
+            // for closing brackets, check the stack if its empty, then invalid
             else if (bracket == ')' || bracket == ']' || bracket == '}') {
                 if (stack.isEmpty()) {
                     StdOut.println("Invalid");
@@ -53,7 +53,7 @@ public class TestingMatrix {
         }
     }
 
-    // Helper method to check if the pair of brackets matches
+    // help function to check if we have matching brackets
     private static boolean isMatchingPair(char open, char close) {
         return (open == '(' && close == ')') ||
                (open == '[' && close == ']') ||
