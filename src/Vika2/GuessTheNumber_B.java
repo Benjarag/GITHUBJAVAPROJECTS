@@ -3,7 +3,7 @@ package Vika2;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class GuessTheNumber {
+public class GuessTheNumber_B {
     public static void main(String[] args) {
         int lo = 1, hi = 1000;
         int attemps = 0;

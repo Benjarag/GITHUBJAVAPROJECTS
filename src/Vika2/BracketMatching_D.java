@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class BracketMatching {
+public class BracketMatching_D {
     public static void main(String[] args) {
         // the length of the bracket_string
         int n = StdIn.readInt();

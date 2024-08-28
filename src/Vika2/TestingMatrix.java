@@ -1,62 +1,37 @@
 package Vika2;
-
-import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class TestingMatrix {
     public static void main(String[] args) {
-        // the length of the bracket sequence
-        int n = StdIn.readInt();
+        int N = StdIn.readInt();  // Fjöldi lóðanna
+        int B = StdIn.readInt();  // Fjárhagsáætlun Maju
 
-        // create a stack to handle all types of brackets
-        Stack<Character> stack = new Stack<>();
-
-        // reading in the string brackets
-        String bracket_string = StdIn.readString();
-        
-        // if n is odd, the sequence cannot be valid
-        if (n % 2 != 0) {
-            StdOut.println("Invalid");
-            return;
+        int[] arr = new int[N];
+        // Lesa inn kostnað við hverja lóð
+        for (int i = 0; i < N; i++) {
+            arr[i] = StdIn.readInt();
         }
 
-        for (int i = 0; i < n; i++) {
-            char bracket = bracket_string.charAt(i);
+        // Byrja með vísar og breytur
+        int left_pointer = 0;
+        int current_sum = 0;
+        int max_length = 0;
 
-            // push opening brackets onto the stack
-            if (bracket == '(' || bracket == '[' || bracket == '{') {
-                stack.push(bracket);
-            } 
-            // for closing brackets, check the stack
-            else if (bracket == ')' || bracket == ']' || bracket == '}') {
-                if (stack.isEmpty()) {
-                    StdOut.println("Invalid");
-                    return;
-                }
-                char last = stack.pop(); // we pop the last in stack e.g. [, {, (
-                // now bracket is: ), ], }
-                if (!isMatchingPair(last, bracket)) {
-                    StdOut.println("Invalid");
-                    return; // returns invalid if the popped char did no match with bracket
-                }
+        for (int right_pointer = 0; right_pointer < arr.length; right_pointer++) {
+            // Bæta kostnaði við núverandi plot við current_sum
+            current_sum += arr[right_pointer];
+
+            // Færa left_pointer til hægri ef current_sum fer yfir fjárhag Maju
+            while (current_sum > B) {
+                current_sum -= arr[left_pointer];
+                left_pointer++;
             }
+
+            // Uppfæra max_length ef núverandi segment er lengri
+            max_length = Math.max(max_length, right_pointer - left_pointer + 1);
         }
 
-        // if the stack is now empty, all brackets matched correctly
-        if (stack.isEmpty()) {
-            StdOut.println("Valid");
-        } 
-        // and if not, its invalid
-        else {
-            StdOut.println("Invalid");
-        }
-    }
-
-    // Helper method to check if the pair of brackets matches
-    private static boolean isMatchingPair(char open, char close) {
-        return (open == '(' && close == ')') ||
-               (open == '[' && close == ']') ||
-               (open == '{' && close == '}');
+        StdOut.println(max_length);  // Prenta lengd lengsta segments sem Maja getur keypt
     }
 }

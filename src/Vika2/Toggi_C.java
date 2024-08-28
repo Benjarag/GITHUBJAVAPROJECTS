@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 
-public class Toggi {
+public class Toggi_C {
     public static void main(String[] args) {
         long c_seconds = StdIn.readLong();
         
