@@ -1,5 +1,6 @@
 package Vika2;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -34,9 +35,13 @@ public class Lyklagangriti_F {
             }
         }
 
-        // finally you can print out the password from the CharArray
-        for (char ch : password) {
-            StdOut.print(ch);
+        // finally you can print out the password from the CharArray using stringbuilder
+        StringBuilder string = new StringBuilder();
+        Iterator<?> it = password.iterator();
+        
+        while (it.hasNext()) {
+            string.append(it.next());
         }
+        StdOut.println(string);
     }
 }
