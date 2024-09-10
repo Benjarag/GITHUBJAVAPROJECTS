@@ -35,13 +35,19 @@ public class Lyklagangriti_F {
             }
         }
 
-        // finally you can print out the password from the CharArray using stringbuilder
+        // finally you can print out the password from the linkedlist using stringbuilder
         StringBuilder string = new StringBuilder();
-        Iterator<?> it = password.iterator();
-        
-        while (it.hasNext()) {
-            string.append(it.next());
-        }
+        for (Character ch : password)
+            string.append(ch);
         StdOut.println(string);
+
+        //// old printing method ////
+        // StringBuilder string = new StringBuilder();
+        // Iterator<?> it = password.iterator();
+        
+        // while (it.hasNext()) {
+        //     string.append(it.next());
+        // }
+        // StdOut.println(string);
     }
 }
