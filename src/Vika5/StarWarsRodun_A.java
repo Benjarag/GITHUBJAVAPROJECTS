@@ -24,3 +24,4 @@ public class StarWarsRodun_A {
             StdOut.print(arr[i] + " "); 
     }
 }
+
