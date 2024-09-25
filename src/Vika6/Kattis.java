@@ -1,4 +1,4 @@
-package Vika5;
+package Vika6;
 
 
 /** Simple yet moderately fast I/O routines.
