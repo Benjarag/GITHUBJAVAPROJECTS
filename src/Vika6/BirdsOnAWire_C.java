@@ -10,37 +10,39 @@ public class BirdsOnAWire_C {
         int d_distance = io.getInt();
         int n_birds = io.getInt();
 
-        if (n_birds > 0) {
-            int[] arr_birds = new int[n_birds];
-            for (int i = 0; i < n_birds; i++) {
-                arr_birds[i] = (io.getInt() - 6);
-            }
-            Arrays.sort(arr_birds);
-            int bird_place_count = 0;
+        int[] arr_birds = new int[n_birds];
+        for (int i = 0; i < n_birds; i++) {
+            arr_birds[i] = io.getInt();
+        }
 
-            bird_place_count += findPlaces(d_distance, arr_birds[0] - d_distance); // before first
-            if (n_birds > 1) {
-                for (int i = 1; i < n_birds; i++) {
-                    int space_between_birds = arr_birds[i] - arr_birds[i - 1] - 1; // cant count themselfes
-                    bird_place_count += findPlaces(d_distance, space_between_birds - d_distance);
-                }
-            }
-            bird_place_count += findPlaces(d_distance, (l_length - 12) - arr_birds[n_birds - 1] - d_distance); // from the last bird to the end of the allowed place
+        Arrays.sort(arr_birds);
 
-            io.print(bird_place_count);
+        int bird_places = 0;
+
+
+        if (n_birds == 0) {
+            // if there are no birds on the wire
+            if ((l_length - 12) >= 0) {
+                bird_places = ((l_length - 12) / d_distance) + 1; // plus one to count also for the bird placed at the 6th cm
+            }
         }
         else {
-            io.print(findPlaces(d_distance, l_length-12));
+            // if there are birds on the wire
+            // this finds how many bird places there are from the 6th cm to the first bird
+            bird_places = (arr_birds[0] - 6) / d_distance;
+
+            // this finds bird places between the birds
+            for (int i = 1; i < n_birds; i++) {
+                bird_places += (arr_birds[i] - arr_birds[i - 1]) / d_distance - 1; // minus 1 because we cant count the bird as a space
+            }
+
+            // this finds bird places from the last bird to the lenght - 6cm
+            bird_places += (l_length - 6 - arr_birds[n_birds - 1]) / d_distance;
         }
 
+        io.println(bird_places);
         io.flush();
         io.close();
     }
-
-    private static int findPlaces(int d_distance, int l_length) {
-        if (l_length > 0) {
-            return ((l_length + d_distance)/d_distance);
-        }
-        return 0;
-    }
 }
+        
