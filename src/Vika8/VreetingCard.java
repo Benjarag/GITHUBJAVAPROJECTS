@@ -1,63 +1,44 @@
 package Vika8;
 
-import edu.princeton.cs.algs4.ST;
-
 public class VreetingCard {
     public static void main(String[] args) {
         Kattio io = new Kattio(System.in, System.out);
         
         int n_number_of_plotted_points = io.getInt();
-        Point[] points = new Point[n_number_of_plotted_points];
+        Long[][] points = new Long[n_number_of_plotted_points][2];
 
         for (int i = 0; i < n_number_of_plotted_points; i++) {
-            Long x = io.getLong();
-            Long y = io.getLong();
-            points[i] = new Point(x, y);
+            points[i][0] = io.getLong();
+            points[i][1] = io.getLong();
         }
         io.println(countPairs(n_number_of_plotted_points, points));
         io.close();
     }
 
-    public static int countPairs(int n_number_of_plotted_points, Point[] points) {
+    public static Long countPairs(int n_number_of_plotted_points, Long[][] points) {
         int length = 2018; // given length
-        int counter = 0; // counter to count how many times the distance is equal to the squared one
+        int length_squared = length * length; // square of the distance
+        Long counter = 0L; // counter to count how many times the distance is equal to the squared one
         
-        // Using ST to keep track of point occurrences
-        ST<Point, Integer> pointMap = new ST<>();
-        
-        // Storing points in the map
-        for (Point point : points) {
-            Integer count = pointMap.get(point);
-            if (count == null) {
-                pointMap.put(point, 1); // If not present, initialize count to 1
-            } else {
-                pointMap.put(point, count + 1); // Increment existing count
-            }
-        }
-        
-        // Now checking for pairs
-        for (Point point : points) {
-            Long x = point.x;
-            Long y = point.y;
-            
-            // Check all four possible target points
-            Point[] targets = {
-                new Point(x + (long) length, y),
-                new Point(x - (long) length, y),
-                new Point(x, y + (long) length),
-                new Point(x, y - (long) length)
-            };
-            
-            // Count pairs
-            for (Point target : targets) {
-                Integer targetCount = pointMap.get(target);
-                if (targetCount != null) {
-                    counter += targetCount;
+        // iterating through each pair of points
+        for (int i = 0; i < n_number_of_plotted_points; i++) {
+            for (int j = i + 1; j < n_number_of_plotted_points; j++) { // i + 1 to avoid counting twice
+                Long dx = points[i][0] - points[j][0];
+                Long dy = points[i][1] - points[j][1];
+                
+                // calculating the squared distance
+                Long squared_distance = dx * dx + dy * dy;
+                
+                // // debugging, print the points and squared distance
+                // System.out.printf("Comparing points (%d, %d) and (%d, %d): dx = %d, dy = %d, squared_distance = %d%n", 
+                //                   points[i][0], points[i][1], points[j][0], points[j][1], dx, dy, squared_distance);
+                
+                // checking if the squared equals to the required length squared
+                if (squared_distance == length_squared) {
+                    counter++;
                 }
             }
         }
-        
-        // Each pair is counted twice, so divide the count by 2
-        return counter / 2;
+        return counter;
     }
 }
