@@ -1,11 +1,12 @@
 package Vika8;
 
 import edu.princeton.cs.algs4.LinearProbingHashST;
-import java.util.ArrayList;
-import java.util.List;
+import edu.princeton.cs.algs4.RedBlackBST;
+import java.util.NoSuchElementException;
 
 public class Fundir_D {
-    private static LinearProbingHashST<Long, List<Long[]>> store = new LinearProbingHashST<>(); // Store meetings for each employee
+    // Store meetings for each employee using a RedBlackBST
+    private static LinearProbingHashST<Long, RedBlackBST<Long, Long>> store = new LinearProbingHashST<>();
 
     public static void main(String[] args) {
         Kattio io = new Kattio(System.in, System.out);
@@ -20,34 +21,56 @@ public class Fundir_D {
         io.close();
     }
 
+    // Method to schedule a meeting
     private static String scheduleMeeting(Long s_id, Long startTime, Long endTime) {
-        // end time is not greater than the start time, return empty string
-        if (endTime <= startTime) {
-            return "";
+        // Validate time range
+        if (endTime < startTime) {
+            return "Invalid time range"; // Return if end time is not greater than start time
         }
 
-        // retrieve or initialize the employee's list of meetings
-        List<Long[]> meetings = store.get(s_id);
+        // Retrieve or initialize the employee's meetings RedBlackBST
+        RedBlackBST<Long, Long> meetings = store.get(s_id);
         if (meetings == null) {
-            meetings = new ArrayList<>(); // initializing if the employee has no meetings
+            meetings = new RedBlackBST<>();
         }
 
-        // check for conflicts with all meetings for the specific employee
-        for (Long[] times : meetings) {
-            Long storedStartTime = times[0];
-            Long storedEndTime = times[1];
+        // Check for conflicts
+        boolean hasConflict = false;
 
-            // check for all potential time conflicts
-            if (startTime.equals(storedStartTime) || startTime.equals(storedEndTime) ||
-                endTime.equals(storedStartTime) || endTime.equals(storedEndTime) ||
-                (startTime < storedEndTime && endTime > storedStartTime)) {
-                return "Starfsmadur er thegar a fundi"; // Overlap or exact match detected
+        // Use try-catch to avoid NoSuchElementException when using floor and ceiling
+        Long prevStart = null;
+        Long nextStart = null;
+
+        try {
+            // Check for overlapping meetings
+            prevStart = meetings.floor(startTime); // Previous meeting start time
+            if (prevStart != null) {
+                Long prevEnd = meetings.get(prevStart); // End time of the previous meeting
+                if (prevEnd != null && prevEnd >= startTime) {
+                    hasConflict = true; // Overlap detected
+                }
             }
+        } catch (NoSuchElementException e) {
+            // Do nothing, prevStart is already null
         }
 
-        // if no conflicts, add new meeting to the schedule
-        meetings.add(new Long[]{startTime, endTime});
-        store.put(s_id, meetings); // updating the schedule for this employee
-        return "Fundur bokadur";
+        try {
+            nextStart = meetings.ceiling(startTime); // Next meeting start time
+            if (nextStart != null && nextStart <= endTime) {
+                hasConflict = true; // Overlap detected
+            }
+        } catch (NoSuchElementException e) {
+            // Do nothing, nextStart is already null
+        }
+
+        // If there's a conflict, return an appropriate message
+        if (hasConflict) {
+            return "Starfsmadur er thegar a fundi"; // Overlap detected
+        }
+
+        // No conflicts, add the new meeting
+        meetings.put(startTime, endTime);
+        store.put(s_id, meetings); // Update the employee's meeting schedule
+        return "Fundur bokadur"; // Meeting scheduled successfully
     }
 }

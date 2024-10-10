@@ -24,7 +24,7 @@ public class Test_2_D {
     // Method to schedule a meeting
     private static String scheduleMeeting(Long s_id, Long startTime, Long endTime) {
         // If the end time is not greater than the start time, return empty string
-        if (endTime <= startTime) {
+        if (endTime < startTime) {
             return "";
         }
 
