@@ -40,7 +40,6 @@ public class FireEscape {
                     }
                 }
             }
-
             // BFS for fire spread
             while (!fireQueue.isEmpty()) {
                 int[] pos = fireQueue.dequeue();
@@ -54,7 +53,6 @@ public class FireEscape {
                     }
                 }
             }
-
             // BFS for player movement
             boolean escaped = false;
             while (!playerQueue.isEmpty() && !escaped) {
